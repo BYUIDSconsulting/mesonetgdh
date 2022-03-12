@@ -21,7 +21,7 @@ get_elev <-  function(df){
 #' @param gdh_data is the information needed to calculate GDHs, including base and upper temps
 #' @export
 
-combine_dt <- function(temp_data, database_data, gdh_data) {
+combine_df <- function(temp_data, database_data, gdh_data) {
   new_data <- temp_data %>% 
     left_join(database_data) %>%
     left_join(gdh_data, by = c("CROP_NAME" = "CROP")) %>%

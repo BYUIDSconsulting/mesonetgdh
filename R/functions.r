@@ -69,3 +69,19 @@ calc_gdh <- function(data){
     
   }
 }
+
+
+#' @title Get state abbreviations
+#' @param df is the dataframe that includes the coordinate columns. Make sure to rename columns to 'lat', 'lon'
+#' @example df 
+#' df$state <- get_state(df)
+#' @export
+get_state <- function(df){
+  if ('lat' %in% colnames(df) | 'lon' %in% colnames(df)) {
+    suppressMessages(df$state <- maps::map.where('state', df$lon, df$lat))
+    df$state <- state.abb[match(stringr::str_to_title(df$state), state.name)]
+    return(df$state)
+  } else {
+    message('Warning message:\nMissing lat, lon columns. \nPlease rename coordinate columns to "lat", "lon"')
+  }
+}

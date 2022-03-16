@@ -43,31 +43,32 @@ combine_df <- function(temp_data, database_data, gdh_data) {
 #' print(growing_degrees)
 #' @export
 
-calc_gdh <- function(data){
-  #determine if using celsius or fahrenheit temperatures
-  if ("air_temp_c" %in% colnames(data)) {
-    
-    data1 <- data %>%
-      mutate(gdh = air_temp_c - Base_Celsius, # calculate gdhs
-             gdh = case_when(gdh < 0 ~ 0, # if total gdhs is less than 0, gdh = 0
-                             air_temp_c > Upper_Celsius ~ Upper_Celsius - Base_Celsius, #if temp reaches above upper limit, gdh = upper - base (?)
-                             TRUE ~ gdh),
-             total_gdh = cumsum(ifelse(is.na(gdh), 0, gdh)))
-    
-  } else if ("air_temp_f" %in% colnames(data)){
-    
-    data1 <- data %>%
-      mutate(gdh = air_temp_f - Base_Fahrenheit,
-             gdh = case_when(gdh < 0 ~ 0,
-                             air_temp_f > Upper_Fahrenheit ~ Upper_Fahrenheit - Base_Fahrenheit, 
-                             TRUE ~ gdh),
-             total_gdh = cumsum(ifelse(is.na(gdh), 0, gdh)))
-    
-  } else {
-    
-    print("No temp column available")
-    
+calc_gdh <- function(data, field = NULL){
+  
+  if (!is.null(field)) {
+    data %<>% filter(field_id == field) 
   }
+  
+  temp_data <- data %>%
+    mutate(gdh = air_temp_f - Base_Fahrenheit,
+           gdh = case_when(gdh < 0 ~ 0,
+                           air_temp_f > Upper_Fahrenheit ~ Upper_Fahrenheit - Base_Fahrenheit, 
+                           TRUE ~ gdh),
+           total_gdh = cumsum(ifelse(is.na(gdh), 0, gdh)))
+  
+  if (!is.null(field)) {
+    
+    total_gdhs <- temp_data %>% 
+      rbind(temp_data[nrow(data),]) %>% 
+      select(FIELD_ID, CROP, seeding_date, date_time, gdh, total_gdh)
+    
+  } else{
+    
+    total_gdhs <- temp_data %>% 
+      group_by(field_id) %>% 
+      slice_max(total_gdh)
+  }
+  return(total_gdhs)
 }
 
 

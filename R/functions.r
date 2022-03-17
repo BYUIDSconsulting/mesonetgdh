@@ -118,8 +118,8 @@ lat_dist <- function(data){
   
   data %>%
     group_by(FIELD_ID, station_id) %>%
-    summarize(lat_dist = distHaversine(matrix(c(data$dummy, data$field_lat), ncol = 2),
-                                       matrix(c(data$dummy, data$station_lat), ncol = 2))) %>%
+    summarize(lat_dist = distHaversine(matrix(c(dummy, field_lat), ncol = 2),
+                                       matrix(c(dummy, station_lat), ncol = 2))) %>%
     unique()
 }
 
@@ -136,8 +136,8 @@ lon_dist <- function(data){
   
   data %>% 
     group_by(FIELD_ID, station_id) %>%
-    summarize(long_dist = distHaversine(matrix(c(data$field_lon, data$dummy), ncol = 2), 
-                                        matrix(c(data$station_lon, data$dummy), ncol = 2))) %>%
+    summarize(long_dist = distHaversine(matrix(c(field_lon, dummy), ncol = 2), 
+                                        matrix(c(station_lon, dummy), ncol = 2))) %>%
     unique()
 }
 
@@ -152,13 +152,8 @@ total_dist <- function(data){
   
   data %>% 
     group_by(FIELD_ID, station_id) %>%
-    summarize(
-      total_dist = distHaversine(matrix(c(data$field_lon, 
-                                          data$field_lat),
-                                        ncol = 2),
-                                 matrix(c(data$station_lon, 
-                                          data$station_lat), 
-                                        ncol = 2))) %>%
+    summarize(total_dist = distHaversine(matrix(c(field_lon, field_lat), ncol = 2),
+                                         matrix(c(station_lon, station_lat), ncol = 2))) %>%
     unique()
 }
 

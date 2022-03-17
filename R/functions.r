@@ -86,3 +86,91 @@ get_state <- function(df){
     message('Warning message:\nMissing lat, lon columns. \nPlease rename coordinate columns to "lat", "lon"')
   }
 }
+
+
+#' @title Calculate hourly temperature
+#' @param data is the dataframe that contains the temp data. Cols should be named 'date_time', 'air_temp_set_1'
+#' @example data 
+#' p <- calc_hourly_temp(data)
+#' @export
+#' 
+calc_hourly_temp <- function(data){
+  # calculate the avg hourly temperature of a field
+  require(lubridate)
+  data %>% 
+    mutate(date_time = ymd_hms(date_time),
+           Hour = paste0(hour(date_time), ":00:00"),
+           Date = date(date_time)) %>%
+    group_by(station_id, Date, Hour) %>%
+    summarize(temp_avg = mean(air_temp_set_1))
+}
+
+#' @title Calculate latitudinal distance
+#' @param data is the dataframe that contains the latitude. Column should be named "lat"
+#' @example data 
+#' p <- lat_dist(data)
+#' @export
+
+lat_dist <- function(data){ 
+  require(geosphere)
+  
+  data$dummy <- 0
+  
+  data %>%
+    group_by(FIELD_ID, station_id) %>%
+    summarize(lat_dist = distHaversine(matrix(c(data$dummy, data$field_lat), ncol = 2),
+                                       matrix(c(data$dummy, data$station_lat), ncol = 2))) %>%
+    unique()
+}
+
+#' @title Calculate longitudinal distance
+#' @param data is the dataframe that contains the latitude. Column should be named "lon"
+#' @example data 
+#' p <- lon_dist(data)
+#' @export
+
+lon_dist <- function(data){
+  require(geosphere)
+  
+  data$dummy <- 0
+  
+  data %>% 
+    group_by(FIELD_ID, station_id) %>%
+    summarize(long_dist = distHaversine(matrix(c(data$field_lon, data$dummy), ncol = 2), 
+                                        matrix(c(data$station_lon, data$dummy), ncol = 2))) %>%
+    unique()
+}
+
+#' @title Calculate distance
+#' @param data is the dataframe that contains the latitude and longitude. Columns should be named "lat" and "lon"
+#' @example data 
+#' p <- total_dist(data)
+#' @export
+
+total_dist <- function(data){
+  require(geosphere)
+  
+  data %>% 
+    group_by(FIELD_ID, station_id) %>%
+    summarize(
+      total_dist = distHaversine(matrix(c(data$field_lon, 
+                                          data$field_lat),
+                                        ncol = 2),
+                                 matrix(c(data$station_lon, 
+                                          data$station_lat), 
+                                        ncol = 2))) %>%
+    unique()
+}
+
+#' @title Calculate elevation difference
+#' @param data is the dataframe that contains the elevations. Columns should be named "field_elev" and "station_elev"
+#' @example data 
+#' p <- elev_change(data)
+#' @export
+
+elev_change <- function(data){
+  
+  data %>% group_by(FIELD_ID, station_id) %>%
+    summarize(elev_dif = abs(field_elev - station_elev)) %>%
+    unique()
+}

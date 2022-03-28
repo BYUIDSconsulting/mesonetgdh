@@ -182,7 +182,7 @@ create_field_weather_data <- function(data){
     group_by(field_id) %>%
     mutate(temp_min = min(air_temp_f),
            temp_max = max(air_temp_f),
-           temp_avg = mean(air_temp_f)) %>%
+           temp_avg = mean(air_temp_set_1)) %>%
     #temp_wt_avg = weighted(temp)) %>%
     select(field_id, Date, Hour, temp_min, temp_max, temp_avg) %>%
     distinct()

@@ -20,9 +20,9 @@ calc_hourly_temp <- function(data){
     group_by(FIELD_ID, CROP_SEASON) %>%
     complete(station_id, Date, Hour) %>%
     as.data.frame() %>% ungroup() %>%
-    dplyr::select(-c(air_temp_set_1, date_time))
+    select(-c(air_temp_set_1, date_time))
   
-  dat$temp_avg <- na.approx(dat$temp_avg, na.rm = FALSE)
+  dat$temp_avg <- zoo::na.approx(dat$temp_avg, na.rm = FALSE)
   return(dat)
 
 }

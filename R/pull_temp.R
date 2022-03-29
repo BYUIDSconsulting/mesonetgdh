@@ -29,7 +29,7 @@ pull_temp <- function(df) {
   }
   
   df_request <- df_request %>% 
-    mutate(year=year(date_time))
+    mutate(year=lubridate::year(date_time))
   
   return(df_request)
   

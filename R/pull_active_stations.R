@@ -12,7 +12,7 @@ pull_active_stations <- function(df, key) {
     
   # request token using API key
   auth <- paste0(base_url, '/auth?apikey=', key)
-  token <<- fromJSON(auth)$TOKEN
+  token <<- jsonlite::fromJSON(auth)$TOKEN
   ################################################
   # Use unique states to pull relevant temperature data
   unique_states <- paste((df$state %>% unique()), collapse=',')

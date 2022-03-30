@@ -15,3 +15,5 @@ create_field_weather_data <- function(data){
     select(FIELD_ID, Date, Hour, temp_min, temp_max, temp_avg) %>%
     distinct()
 }
+
+

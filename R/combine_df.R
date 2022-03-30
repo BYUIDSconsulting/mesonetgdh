@@ -8,12 +8,9 @@ combine_df <- function(temp_data, database_data, gdh_data) {
   new_data <- temp_data %>% 
     left_join(database_data) %>%
     left_join(gdh_data, by = c("CROP_NAME" = "CROP")) %>%
-    select(FIELD_ID, CROP_NAME, Base_Fahrenheit, 
-           Base_Celsius, Upper_Fahrenheit, 
-           Upper_Celsius, air_temp_c, date_time, START_DATE, CROP_SEASON) %>%
-    mutate(date_time = ymd_hms(date_time),
-           START_DATE = ymd_hms(START_DATE)) %>%
-    filter(CROP_SEASON == year(date_time))
+    select(FIELD_ID, CROP_NAME, Base_Fahrenheit, Upper_Fahrenheit, 
+           temp_avg, Date, Hour, seeding_date, harvest_date, CROP_SEASON) %>%
+    filter(CROP_SEASON == lubridate::year(Date))
   
   
   return(new_data)

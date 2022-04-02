@@ -95,3 +95,20 @@ elev_change <- function(data){
     summarize(elev_dif = abs(field_elev - station_elev)) %>%
     unique()
 }
+
+#' @title Calculate weights according to elevation
+#' @param data is the dataframe that contains the elevations. Columns should be named "FIELD_ID" and "station_id"
+#' @example data 
+#' p <- weighted(data)
+#' @export
+weighted <- function(data){
+  elev <- elev_change(data) %>% 
+    mutate(adjusted_wt = -elev_dif/1000 * 3.5) %>% 
+    distinct(across(c("FIELD_ID", "station_id")), .keep_all = TRUE)
+  
+  data %>% left_join(elev) %>%
+    group_by(FIELD_ID, station_id, Date, Hour) %>%
+    summarize(wt_temp = temp_avg + adjusted_wt)
+}
+
+

@@ -1,18 +1,20 @@
 #' @title Summary of temperature aggregations
-#' @param data is the dataframe that contains the temperatures from each station. Temp column should be named "air_temp_set_1"
+#' @param data is the dataframe that contains the temperatures from each station. Temp column should be named "temp_avg
 #' @example data 
 #' p <- elev_change(data)
 #' @export
 
 create_field_weather_data <- function(data){
-  # dat <- field_station %>% left_join(station_temp_data)
+  dat1 <- weighted(data)
+  
   data %>% 
+    left_join(dat1, by = c("FIELD_ID", "station_id", "Date", "Hour")) %>%
     group_by(FIELD_ID, Date, Hour) %>%
-    mutate(temp_min = min(temp_avg),
-           temp_max = max(temp_avg),
-           temp_avg = mean(temp_avg)) %>%
-    #temp_wt_avg = weighted(temp)) %>%
-    select(FIELD_ID, Date, Hour, temp_min, temp_max, temp_avg) %>%
+    summarize(temp_min = min(temp_avg, na.rm = TRUE),
+              temp_max = max(temp_avg, na.rm = TRUE),
+              temp_combined_avg = mean(temp_avg, na.rm = TRUE),
+              temp_wt_avg = mean(wt_temp, na.rm = TRUE)) %>%
+    select(FIELD_ID, Date, Hour, temp_min, temp_max, temp_combined_avg, temp_wt_avg) %>%
     distinct()
 }
 

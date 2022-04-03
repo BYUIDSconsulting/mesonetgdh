@@ -14,9 +14,9 @@ calc_gdh <- function(data, field = NULL){
   temp_data <- data %>%
     group_by(FIELD_ID, CROP_NAME, CROP_SEASON) %>%
     filter(Date >= seeding_date & Date <= harvest_date) %>%
-    mutate(gdh = temp_avg - Base_Fahrenheit,
+    mutate(gdh = temp_combined_avg - Base_Fahrenheit,
            gdh = case_when(gdh < 0 ~ 0,
-                           temp_avg > Upper_Fahrenheit ~ Upper_Fahrenheit - Base_Fahrenheit, 
+                           temp_combined_avg > Upper_Fahrenheit ~ Upper_Fahrenheit - Base_Fahrenheit, 
                            TRUE ~ gdh),
            total_gdh = cumsum(ifelse(is.na(gdh), 0, gdh))) 
   

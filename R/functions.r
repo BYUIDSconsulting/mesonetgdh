@@ -92,7 +92,7 @@ total_dist <- function(data){
 elev_change <- function(data){
   
   data %>% group_by(FIELD_ID, station_id) %>%
-    summarize(elev_dif = abs(field_elev - station_elev)) %>%
+    summarize(elev_dif = field_elev - station_elev) %>%
     unique()
 }
 

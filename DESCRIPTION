@@ -1,4 +1,4 @@
-Package: weather
+Package: mesonetgdh
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
@@ -19,6 +19,4 @@ Imports:
     jsonlite,
     httr,
     zoo,
-    
-    
-
+URL: https://byuidsconsulting.github.io/weatheR/

@@ -36,5 +36,7 @@ calc_gdh <- function(data, field = NULL){
       select(FIELD_ID, CROP_NAME, seeding_date, harvest_date, total_gdh)
 
   }
+  
+  write_csv(total_gdhs, paste0("GDH-", Sys.Date(), ".csv"))
   return(total_gdhs)
 }

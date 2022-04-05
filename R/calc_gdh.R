@@ -11,32 +11,17 @@ calc_gdh <- function(data, field = NULL){
     data %<>% filter(FIELD_ID == field) 
   }
   
-  temp_data <- data %>%
-    group_by(FIELD_ID, CROP_NAME, CROP_SEASON) %>%
+  gdhs <- data %>%
+    group_by(FIELD_ID, CROP_NAME, CROP_SEASON, Date) %>%
     filter(Date >= seeding_date & Date <= harvest_date) %>%
-    mutate(gdh = temp_combined_avg - Base_Fahrenheit,
-           gdh = case_when(gdh < 0 ~ 0,
-                           temp_combined_avg > Upper_Fahrenheit ~ Upper_Fahrenheit - Base_Fahrenheit, 
-                           TRUE ~ gdh),
-           total_gdh = cumsum(ifelse(is.na(gdh), 0, gdh))) 
+    summarize(seeding_date = seeding_date,
+              harvest_date = harvest_date,
+              gdh = temp_combined_avg - Base_Fahrenheit,
+              gdh = case_when(gdh < 0 ~ 0,
+                              temp_combined_avg > Upper_Fahrenheit ~ Upper_Fahrenheit - Base_Fahrenheit, 
+                              TRUE ~ gdh))
   
-  
-  
-  if (!is.null(field)) {
-    
-    total_gdhs <- temp_data %>% 
-      rbind(temp_data[nrow(data),]) %>% 
-      select(FIELD_ID, CROP_NAME, seeding_date, date_time, gdh, total_gdh)
-    
-  } else{
-    
-    total_gdhs <- temp_data %>% 
-      group_by(FIELD_ID, CROP_NAME, CROP_SEASON) %>% 
-      filter(total_gdh == max(total_gdh)) %>%
-      select(FIELD_ID, CROP_NAME, seeding_date, harvest_date, total_gdh)
-
-  }
-  
-  write_csv(total_gdhs, paste0("GDH-", Sys.Date(), ".csv"))
-  return(total_gdhs)
+  write_csv(gdhs, paste0("GDH-", Sys.Date(), ".csv"))
+  print("csv file created")
+  return(gdhs)
 }

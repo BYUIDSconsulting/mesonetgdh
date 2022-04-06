@@ -2,22 +2,10 @@ Package: mesonetgdh
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    c(person(given = "J.", 
-             family = "Hathway", 
-             role = c("aut", "cre"),
-             email = "hathwayj@byui.edu",
-             comment = c(ORCID = "0000-0002-1574-0832")),
-      person(given = "Amarsanaa (Mars)", 
-             family = "Biziyabal", 
-             role = c("aut"), 
-             comment = "api functions, package structure")),
-      person(given = "Ellie", 
-             family = "Anderson", 
-             role = c("aut"), 
-             comment = "temperature and gdh calulation functions")),
-      person(given = "Dawn", 
-             family = "Galloway", 
-             role = c("ctb"))
+    c(person("J.", "Hathway", role = c("aut", "cre"), email = "hathwayj@byui.edu", comment = c(ORCID = "0000-0002-1574-0832")),
+      person("Amarsanaa (Mars)", "Biziyabal", role = c("aut"), comment = "api functions, package structure"),
+      person("Ellie", "Anderson", role = c("aut"), comment = "temperature and gdh calulation functions"),
+      person("Dawn", "Galloway", role = c("ctb"))
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license

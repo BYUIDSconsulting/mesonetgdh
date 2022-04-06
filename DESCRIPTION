@@ -5,7 +5,7 @@ Authors@R:
     c(person("J.", "Hathway", role = c("aut", "cre"), email = "hathwayj@byui.edu", comment = c(ORCID = "0000-0002-1574-0832")),
       person("Mars", "Biziyabal", role = c("aut"), comment = "api functions, package structure"),
       person("Ellie", "Anderson", role = c("aut"), comment = "temperature and gdh calulation functions"),
-      person("Dawn", "Galloway", role = c("ctb"))
+      person("Dawn", "Galloway", role = c("ctb")))
 Author: J. Hathaway [aut, cre],
     Mars Biziyabal [aut],
     Ellie Anderson [aut],

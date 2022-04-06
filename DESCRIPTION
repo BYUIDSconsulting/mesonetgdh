@@ -1,12 +1,16 @@
 Package: mesonetgdh
-Title: What the Package Does (One Line, Title Case)
+Title: Calculate growing degree hours per day
 Version: 0.0.0.9000
 Authors@R: 
     c(person("J.", "Hathway", role = c("aut", "cre"), email = "hathwayj@byui.edu", comment = c(ORCID = "0000-0002-1574-0832")),
-      person("Amarsanaa (Mars)", "Biziyabal", role = c("aut"), comment = "api functions, package structure"),
+      person("Mars", "Biziyabal", role = c("aut"), comment = "api functions, package structure"),
       person("Ellie", "Anderson", role = c("aut"), comment = "temperature and gdh calulation functions"),
       person("Dawn", "Galloway", role = c("ctb"))
-Description: What the package does (one paragraph).
+Author: J. Hathaway [aut, cre],
+    Mars Biziyabal [aut],
+    Ellie Anderson [aut],
+    Dawn Galloway [ctb]
+Description: pull station data and calculate daily gdh for nearby fields.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8

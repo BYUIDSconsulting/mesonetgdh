@@ -7,7 +7,7 @@ This package was made possible in part due to the data made available by the Nat
 *  To access Mesonet data, the Mesonet GDH package requires a [key from Synoptic data](https://developers.synopticdata.com/signup/)
 *  Install the package as below:
 ```{r}
-devtools::install_github("BYUIDSconsulting/weatheR")
+devtools::install_github("https://github.com/BYUIDSconsulting/mesonetgdh/")
 ```
 
 #### Notes

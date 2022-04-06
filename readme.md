@@ -1,10 +1,10 @@
-## Mesonet Accumulated Growing Degree Hours (AGDH)
+## Mesonet GDH (Growing Degree Hours)
 
 This package was made possible in part due to the data made available by the National Weather Service's Mesonet program and was written by students from the Brigham Young University - Idaho Data Science program.
 
 #### Installation Instructions
 
-*  To access Mesonet data, the Mesonet AGDH package requires a [key from Synoptic data](https://developers.synopticdata.com/signup/)
+*  To access Mesonet data, the Mesonet GDH package requires a [key from Synoptic data](https://developers.synopticdata.com/signup/)
 *  Install the package as below:
 ```{r}
 devtools::install_github("BYUIDSconsulting/weatheR")

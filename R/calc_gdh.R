@@ -1,6 +1,6 @@
 #' @title Calculate Growing Degree Hours
 #' @param data is the dataframe that is output from 'combine_df' function
-#' @example data = temp_df
+#' @examples  data = temp_df
 #' growing_degrees <- calc_gdh(data)
 #' print(growing_degrees)
 #' @export
@@ -27,3 +27,4 @@ calc_gdh <- function(data, field = NULL){
   print("csv file created")
   return(gdhs)
 }
+

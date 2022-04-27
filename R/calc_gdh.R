@@ -5,6 +5,7 @@
 #' print(growing_degrees)
 #' @export
 
+# Test comment
 calc_gdh <- function(data, field = NULL){
   
   if (!is.null(field)) {

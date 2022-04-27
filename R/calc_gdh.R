@@ -6,6 +6,7 @@
 #' @export
 
 # Test comment
+# Comment 2
 calc_gdh <- function(data, field = NULL){
   
   if (!is.null(field)) {

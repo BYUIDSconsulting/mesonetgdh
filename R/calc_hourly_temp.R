@@ -1,7 +1,7 @@
 #' @title Calculate hourly temperature
 #' @param data is the dataframe that contains the temp data. Cols should be named 'date_time', 'air_temp_set_1'
-#' @example data 
-#' p <- calc_hourly_temp(data)
+#' @examples data 
+#' @examples p <- calc_hourly_temp(data)
 #' @export
 #' 
 calc_hourly_temp <- function(data){

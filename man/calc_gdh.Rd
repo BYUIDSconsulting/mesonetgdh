@@ -7,8 +7,16 @@
 calc_gdh(data, field = NULL)
 }
 \arguments{
-\item{data}{is the dataframe that is output from 'combine_df' function}
+\item{data}{is the dataframe that is output from the 'combine_df' function}
+}
+\value{
+the growing degree hours for the dataframe provided
 }
 \description{
 Calculate Growing Degree Hours
+}
+\examples{
+data = temp_df
+growing_degrees <- calc_gdh(data)
+print(growing_degrees)
 }

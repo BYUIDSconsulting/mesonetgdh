@@ -2,13 +2,15 @@
 % Please edit documentation in R/seed_harvest_clean.R
 \name{seed_harvest_clean}
 \alias{seed_harvest_clean}
-\title{Restructure/clean seeding and harvest data}
+\title{Filter/restructure seeding and harvest data}
 \usage{
-seed_harvest_clean(seed_harvest_data)
+seed_harvest_clean(seed_harvest_data, method = NULL)
 }
 \arguments{
 \item{seed_harvest_data}{is a dataset containing the crop seeding and harvest dates for all the fields pulled from the database.}
+
+\item{method}{choose between 'current' or 'historic'. 'current' will only include the current year for crop season. 'historic' will exclude the current year from crop season.}
 }
 \description{
-Restructure/clean seeding and harvest data
+Filter/restructure seeding and harvest data
 }

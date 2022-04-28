@@ -2,6 +2,8 @@
 #'
 #' @param data is the dataframe that is output from the 'combine_df' function
 #'
+#' @return the growing degree hours for the dataframe provided
+#'
 #' @examples data = temp_df
 #' @examples growing_degrees <- calc_gdh(data)
 #' @examples print(growing_degrees)

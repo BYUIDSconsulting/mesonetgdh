@@ -12,3 +12,7 @@ calc_hourly_temp(data)
 \description{
 Calculate hourly temperature
 }
+\examples{
+data 
+p <- calc_hourly_temp(data)
+}

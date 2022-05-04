@@ -1,6 +1,6 @@
 #' @title Summary of temperature aggregations
 #' @param data is the dataframe that contains the temperatures from each station. Temp column should be named "temp_avg
-#' @example data 
+#' @examples data 
 #' p <- elev_change(data)
 #' @export
 

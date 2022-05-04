@@ -12,3 +12,7 @@ create_field_weather_data(data)
 \description{
 Summary of temperature aggregations
 }
+\examples{
+data 
+p <- elev_change(data)
+}

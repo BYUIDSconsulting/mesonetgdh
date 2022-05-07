@@ -12,3 +12,7 @@ get_state(df)
 \description{
 Get state abbreviations
 }
+\examples{
+ df 
+df$state <- get_state(df)
+}

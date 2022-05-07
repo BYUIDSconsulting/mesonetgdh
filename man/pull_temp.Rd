@@ -12,3 +12,6 @@ pull_temp(df)
 \description{
 Request the temperature data from MesoWest
 }
+\examples{
+p <- pull_temp(df)
+}

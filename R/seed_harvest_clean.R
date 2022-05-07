@@ -1,7 +1,8 @@
 #' @title Filter/restructure seeding and harvest data 
 #' @param seed_harvest_data is a dataset containing the crop seeding and harvest dates for all the fields pulled from the database.
 #' @param method choose between 'current' or 'historic'. 'current' will only include the current year for crop season. 'historic' will exclude the current year from crop season. 
-#' @export
+#' @examples p <- seed_harvest_clean(seed_harvest_data, method = current)
+#' @examples p <- seed_harvest_clean(seed_harvest_data, method = historic)
 
 seed_harvest_clean <- function(seed_harvest_data, method=NULL) {
   

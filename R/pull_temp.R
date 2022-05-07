@@ -1,6 +1,6 @@
 #' @title Request the temperature data from MesoWest
 #' @param df is the fields_stations dataset derived from the find_closest_station() function. 
-#' @export
+#' @examples p <- pull_temp(df)
 
 pull_temp <- function(df) {
   

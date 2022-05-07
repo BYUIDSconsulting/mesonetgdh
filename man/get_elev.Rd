@@ -12,3 +12,8 @@ get_elev(df)
 \description{
 Get Elevations
 }
+\examples{
+ df = makeaneexample
+get_elev(df)
+
+}

@@ -12,3 +12,7 @@ elev_change(data)
 \description{
 Calculate elevation difference
 }
+\examples{
+data 
+p <- elev_change(data)
+}

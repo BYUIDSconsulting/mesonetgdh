@@ -1,7 +1,8 @@
 #' @title Get Elevations
 #' @param df is the dataframe as output from the 'all_fields' function
-#' @example df = makeaneexample
+#' @examples  df = makeaneexample
 #' get_elev(df)
+#'
 #' @export
 get_elev <-  function(df){
   
@@ -18,7 +19,7 @@ get_elev <-  function(df){
 
 #' @title Get state abbreviations
 #' @param df is the dataframe that includes the coordinate columns. Make sure to rename columns to 'lat', 'lon'
-#' @example df 
+#' @examples  df 
 #' df$state <- get_state(df)
 #' @export
 get_state <- function(df){
@@ -34,7 +35,7 @@ get_state <- function(df){
 
 #' @title Calculate latitudinal distance
 #' @param data is the dataframe that contains the latitude. Column should be named "lat"
-#' @example data 
+#' @examples  data 
 #' p <- lat_dist(data)
 #' @export
 lat_dist <- function(data){ 
@@ -52,7 +53,7 @@ lat_dist <- function(data){
 
 #' @title Calculate longitudinal distance
 #' @param data is the dataframe that contains the latitude. Column should be named "lon"
-#' @example data 
+#' @examples data 
 #' p <- lon_dist(data)
 #' @export
 lon_dist <- function(data){
@@ -70,7 +71,7 @@ lon_dist <- function(data){
 
 #' @title Calculate distance
 #' @param data is the dataframe that contains the latitude and longitude. Columns should be named "lat" and "lon"
-#' @example data 
+#' @examples data 
 #' p <- total_dist(data)
 #' @export
 total_dist <- function(data){
@@ -86,7 +87,7 @@ total_dist <- function(data){
 
 #' @title Calculate elevation difference
 #' @param data is the dataframe that contains the elevations. Columns should be named "field_elev" and "station_elev"
-#' @example data 
+#' @examples data 
 #' p <- elev_change(data)
 #' @export
 elev_change <- function(data){
@@ -98,7 +99,7 @@ elev_change <- function(data){
 
 #' @title Calculate weights according to elevation
 #' @param data is the dataframe that contains the elevations. Columns should be named "FIELD_ID" and "station_id"
-#' @example data 
+#' @examples data 
 #' p <- weighted(data)
 #' @export
 weighted <- function(data){

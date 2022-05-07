@@ -14,3 +14,6 @@ pull_active_stations(df, key)
 \description{
 Pull active stations from MesoWest API
 }
+\examples{
+p <- pull_active_stations(df, key)
+}

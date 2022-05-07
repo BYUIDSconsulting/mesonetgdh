@@ -2,7 +2,7 @@
 #' @param field_df is the fields dataset. 
 #' @param stations_df is the dataset that includes all the active stations that was derived from the pull_active_stations() function.
 #' @param radius is set to the maximum distance a station could be away from a field.  
-#' @export
+#' @examples p <- find_closest_stations(field_df, stations_df, radius = ###)
 
 find_closest_stations <- function(field_df, stations_df, radius) {
   

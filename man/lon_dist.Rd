@@ -12,3 +12,7 @@ lon_dist(data)
 \description{
 Calculate longitudinal distance
 }
+\examples{
+data 
+p <- lon_dist(data)
+}

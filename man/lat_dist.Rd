@@ -12,3 +12,7 @@ lat_dist(data)
 \description{
 Calculate latitudinal distance
 }
+\examples{
+ data 
+p <- lat_dist(data)
+}

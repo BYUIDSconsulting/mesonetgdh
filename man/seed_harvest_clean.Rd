@@ -14,3 +14,7 @@ seed_harvest_clean(seed_harvest_data, method = NULL)
 \description{
 Filter/restructure seeding and harvest data
 }
+\examples{
+p <- seed_harvest_clean(seed_harvest_data, method = current)
+p <- seed_harvest_clean(seed_harvest_data, method = historic)
+}

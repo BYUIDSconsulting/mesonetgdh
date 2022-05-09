@@ -16,3 +16,6 @@ find_closest_stations(field_df, stations_df, radius)
 \description{
 Find the closest stations
 }
+\examples{
+p <- find_closest_stations(field_df, stations_df, radius = ###)
+}

@@ -12,3 +12,7 @@ total_dist(data)
 \description{
 Calculate distance
 }
+\examples{
+data 
+p <- total_dist(data)
+}

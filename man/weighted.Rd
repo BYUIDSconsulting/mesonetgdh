@@ -12,3 +12,7 @@ weighted(data)
 \description{
 Calculate weights according to elevation
 }
+\examples{
+data 
+p <- weighted(data)
+}

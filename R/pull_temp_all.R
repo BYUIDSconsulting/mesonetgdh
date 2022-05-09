@@ -1,7 +1,7 @@
 #' @title Request the temperature data from MesoWest, but fast
 #' @param df is the fields_stations dataset derived from the find_closest_station() function. 
 #' @examples p <- pull_temp_all(df)
-global_resp <- NULL
+#' @export
 pull_temp_all <- function(df) {
   
   stations_date <- df %>% 
@@ -34,7 +34,5 @@ pull_temp_all <- function(df) {
   df_request <- df_request %>% 
     mutate(year=lubridate::year(date_time))  
   return(df_request)
-  
-  
   
 }

@@ -7,7 +7,7 @@
 #' @examples data = temp_df
 #' @examples growing_degrees <- calc_gdh(data)
 #' @examples print(growing_degrees)
-
+#' @export
 calc_gdh <- function(data, field = NULL){
   
   if (!is.null(field)) {

@@ -60,7 +60,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">data</span> <span class="op">=</span> <span class="va">temp_df</span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'temp_df' not found</span>
 <span class="r-in"><span class="va">growing_degrees</span> <span class="op">&lt;-</span> <span class="fu">calc_gdh</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in calc_gdh(data):</span> could not find function "calc_gdh"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data %&gt;% group_by(FIELD_ID, CROP_NAME, CROP_SEASON, Date) %&gt;%     filter(Date &gt;= seeding_date &amp; Date &lt;= harvest_date) %&gt;% summarize(seeding_date = seeding_date,     harvest_date = harvest_date, gdh = temp_combined_avg - Base_Fahrenheit,     gdh = case_when(gdh &lt; 0 ~ 0, temp_combined_avg &gt; Upper_Fahrenheit ~         Upper_Fahrenheit - Base_Fahrenheit, TRUE ~ gdh)):</span> could not find function "%&gt;%"</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">growing_degrees</span><span class="op">)</span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print(growing_degrees):</span> object 'growing_degrees' not found</span>
 </code></pre></div>

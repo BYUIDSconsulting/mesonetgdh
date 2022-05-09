@@ -235,7 +235,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     invisible(names)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x556eb61f9400&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55636beac340&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:utils&gt;</span>
 <span class="r-in"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">calc_hourly_temp</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data %&gt;% group_by(FIELD_ID, CROP_SEASON) %&gt;% filter(date_time &gt;=     seeding_date &amp; date_time &lt;= harvest_date) %&gt;% ungroup() %&gt;%     mutate(date_time = lubridate::ymd_hms(date_time), Hour = lubridate::hour(date_time),         Date = lubridate::date(date_time)) %&gt;% group_by(FIELD_ID,     CROP_SEASON, station_id, Date, Hour) %&gt;% mutate(temp_avg = mean(air_temp_set_1,     na.rm = TRUE)) %&gt;% ungroup() %&gt;% distinct(across(c(station_id,     Date, Hour)), .keep_all = TRUE) %&gt;% group_by(FIELD_ID, CROP_SEASON) %&gt;%     complete(station_id, Date, Hour) %&gt;% as.data.frame() %&gt;%     ungroup() %&gt;% select(-c(air_temp_set_1, date_time)):</span> could not find function "%&gt;%"</span>

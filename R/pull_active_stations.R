@@ -2,8 +2,7 @@
 #' @param df is 'fields' dataset, including FIELD id,lat,lon,elevation,state, CROP name,season, seeding and harvest dates
 #' @param key is the API key for MesoWest
 #' @examples p <- pull_active_stations(df, key)
-
-
+#' @export
 pull_active_stations <- function(df, key) {
   
   ################################################

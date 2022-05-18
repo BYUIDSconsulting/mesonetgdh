@@ -3,7 +3,6 @@
 #' @examples data 
 #' p <- elev_change(data)
 #' @export
-
 create_field_weather_data <- function(data){
   dat1 <- weighted(data)
   

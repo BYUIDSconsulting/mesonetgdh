@@ -1,0 +1,106 @@
+---
+title: "ODBC"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ODBC}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE}
+library(mesonetgdh)
+```
+
+# Step 1: Download the Visual C++ 2015 Restributable
+
+The Microsoft Visual C++ 2015 Redistributable is a software library needed in order to install the Snowflake ODBC driver. First, go
+[here](https://www.microsoft.com/en-us/download/details.aspx?id=48145) to download it.
+
+![Download VC++ 2015 Redistributable](images/download_vcpp.jpg){width=768px}{width=768px}
+
+Then, when it asks, make sure to download the "X64" version:
+
+![Choose X64 Download](images/choose_vcpp.jpg){width=768px}
+
+Finally, run the installer:
+
+![Run VC++ 2015 Redistributable Installer](images/install_vcpp.jpg){width=768px}
+
+# Step 2: Downloading ODBC software
+
+ODBC is the way R can connect to the snowflake database. For Windows, it can be downloaded [here](https://docs.snowflake.com/en/user-guide/odbc-windows.html) (with instructions).
+
+Download the `snowflake64_odbc-<version>.msi` file:
+
+![Download the MSI file from the Snowflake website](images/download_msi.jpg){width=768px}
+
+And run it:
+
+![Run the installer](images/run_msi.jpg){width=768px}
+
+
+# Step 3: Set up ODBC
+
+Go to the Windows start menu search bar, and search for "ODBC".Then open up "ODBC Data Sources (64-bit)":
+
+![Search for ODBC](images/odbc_search.jpg){width=768px}
+
+Once in the ODBC window, go to the "Drivers" tab and make sure that Snowflake shows up there:
+
+![Find Snowflake driver](images/odbc_drivers.jpg){width=768px}
+
+Now, go to the "System DSN" tab, and click the "Add" button to add the Stotz
+data source:
+
+![Add new data source](images/data_sources.jpg){width=768px}
+
+Now, set the driver that we are configuring the data source for to "SnowflakeDSII":
+
+![Select the Snowflake driver](images/select_driver.jpg){width=768px}
+
+Now, we can set the options for the Snowflake data source so we can connect to the Snowflake database. Set the Data Source to "Stotz", the user to "STOTZ_GUEST", the server to "ut67101.us-east-2.aws.snowflakecomputing.com", and the warehouse to
+"FIREHOSE". Then, click "OK":
+
+![Configure the Snowflake data source](images/snowflake_config.jpg){width=768px}
+
+Now, back on the System DSN window, click "OK". This will save your Stotz data source and close the ODBC configuration window.
+
+![Save changes to ODBC](images/save_odbc.jpg){width=768px}
+
+# Step 4: Testing the code in R
+
+Finally, we can test the code in R. First, install the DBI and ODBC packages,
+which allow R to connect to the Snowflake database through ODBC:
+
+```r
+install.packages(c("DBI", "odbc"))
+```
+
+Now, try connecting to the database:
+
+```r
+myconn <- DBI::dbConnect(odbc::odbc(), "Stotz", uid = "STOTZ_GUEST",
+                         pwd = "a9rf8vFBhjnfaHSighs")
+```
+
+Then, try using the farm production database (this should return a data frame with zero rows and columns):
+
+```r
+DBI::dbGetQuery(myconn, "USE FARM_PROD.FARM__PRODUCTION;")
+```
+
+Now, try pulling the data from the database (this should return a data frame with 10 rows):
+
+```r
+DBI::dbGetQuery(myconn, "SELECT FIELD_ID, CROP_NAME FROM FIELD_OPERATIONS LIMIT 10;")
+```
+
+Here is a screenshot showing querying the database in R:
+![Querying the DB in R](images/r_test.jpg){width=768px}

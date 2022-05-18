@@ -3,7 +3,6 @@
 #' @examples data 
 #' @examples p <- calc_hourly_temp(data)
 #' @export
-#' 
 calc_hourly_temp <- function(data){
   # calculate the avg hourly temperature of a field
   dat <- data %>% 

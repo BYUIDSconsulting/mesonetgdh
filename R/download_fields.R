@@ -4,9 +4,10 @@ pacman::p_load(DBI, odbc, tidyverse)
 #' @title Request fields data (all_fields1) from Snowflake
 #' @param conn The connection to the Snowflake database
 #' @examples all_fields1 <- download_crops(myconn) %>% filter(state %in% c('AZ','ID','UT'))
-#' @returns The seed_harvest_df data frame.
+#' @returns The all_fields1 data frame.
 #' @export
-download_crops <- function(conn, min_year=NA, max_year=NA) {
+download_fields <- function(conn, min_year=NA, max_year=NA) {
+  DBI::dbGetQuery(conn, "USE FARM_PROD.FARM__PRODUCTION;")
   fields_query <- "
   SELECT fi.ID as FIELD_ID,
       CAST(
@@ -29,8 +30,6 @@ download_crops <- function(conn, min_year=NA, max_year=NA) {
     mutate(state = mesonetgdh::get_state(.),
          field_elev = mesonetgdh::get_elev(.)) %>% 
     drop_na() %>% 
-    # Using only fields in Arizona, Idaho, Utah
-    filter(state %in% c('AZ', 'ID', 'UT')) %>% 
     rename(field_lat=lat,
            field_lon=lon)
   return(all_fields1)

@@ -9,7 +9,6 @@ pacman::p_load(DBI, odbc, tidyverse, gtools)
 #' @returns The seed_harvest_df data frame.
 #' @export
 download_crops <- function(conn, gdd_info_formatted, min_year=NA, max_year=NA) {
-  usethis::use_data()
   if(gtools::invalid(conn)){
     stop("Invalid connection provided")
   }

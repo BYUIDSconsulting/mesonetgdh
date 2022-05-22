@@ -1,17 +1,32 @@
+library(pacman)
+pacman::p_load(dplyr)
+
 #' @title Get Elevations
 #' @param df is the dataframe as output from the 'all_fields' function
 #' @examples  df = makeaneexample
 #' get_elev(df)
 #'
 #' @export
-get_elev <-  function(df){
-  
-  # define coordinate columns
-  coords <- data.frame(x=df$lon, y=df$lat)
-  # get elevation from source
-  elev <- elevatr::get_elev_point(coords, unit = 'feet', src='epqs', prj="EPSG:4326")
-  # extract elevation column
-  elevation <- elev[[1]]
+get_elev <-  function(df, conn=NA){
+  # CREATE TABLE FIELD_ELEV_BYUI_DEV (
+  #   FIELD_ID VARCHAR,
+  #   ELEVATION NUMBER
+  # );
+  # Query and cache to DB if possible
+  all_cached <- FALSE
+  if(!is.na(conn)){
+    elev_query <- "SELECT FIELD_ID, ELEV FROM FIELD_ELEV_BYUI_DEV;"
+    elevations <- DBI::dbGetQuery(conn, elev_query)
+    joined_elevs <- df %>% inner_join(elevations,  by="FIELD_ELEV")
+  }
+  if(!all_cached){
+    # define coordinate columns
+    coords <- data.frame(x=df$lon, y=df$lat)
+    # get elevation from source
+    elev <- elevatr::get_elev_point(coords, unit = 'feet', src='epqs', prj="EPSG:4326")
+    # extract elevation column
+    elevation <- elev[[1]]
+  }
   
   return(elevation)
 }

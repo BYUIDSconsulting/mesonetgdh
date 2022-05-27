@@ -1,5 +1,5 @@
 library(pacman)
-pacman::p_load(dplyr)
+pacman::p_load(dplyr, DBI)
 
 #' @title Get Elevations
 #' @param df is the dataframe as output from the 'all_fields' function
@@ -7,27 +7,59 @@ pacman::p_load(dplyr)
 #' get_elev(df)
 #'
 #' @export
-get_elev <-  function(df, conn=NA){
+get_elev <-  function(df, conn=NULL){
   # CREATE TABLE FIELD_ELEV_BYUI_DEV (
   #   FIELD_ID VARCHAR,
   #   ELEVATION NUMBER
   # );
-  # Query and cache to DB if possible
-  all_cached <- FALSE
-  if(!is.na(conn)){
-    elev_query <- "SELECT FIELD_ID, ELEV FROM FIELD_ELEV_BYUI_DEV;"
+  
+  # Set an index so we can sort at the end
+  df$row_num = seq.int(nrow(df))
+  # Query from the DB if possible
+  missing_elevs <- df
+  joined_elevs <- df
+  if(!is.null(conn)){
+    print("Pulling from cache...")
+    elev_query <- "SELECT FIELD_ID, ELEVATION FROM FIELD_ELEV_BYUI_DEV;"
     elevations <- DBI::dbGetQuery(conn, elev_query)
-    joined_elevs <- df %>% inner_join(elevations,  by="FIELD_ELEV")
+    joined_elevs <- df %>% left_join(elevations,  by="FIELD_ID")
+    print(sprintf("%d rows returned", length(rownames(elevations))))
+    missing_elevs <- joined_elevs %>% filter(is.na(ELEVATION))
   }
-  if(!all_cached){
+
+  if(length(rownames(missing_elevs)) > 0){
+    print("Pulling remaining elevations from API...")
+    # Get everything from the Elevation API that isn't cached
     # define coordinate columns
-    coords <- data.frame(x=df$lon, y=df$lat)
+    coords <- data.frame(x=missing_elevs$lon, y=missing_elevs$lat)
     # get elevation from source
     elev <- elevatr::get_elev_point(coords, unit = 'feet', src='epqs', prj="EPSG:4326")
     # extract elevation column
     elevation <- elev[[1]]
+    # Add elevations back to the data frame
+    missing_elevs$ELEVATION = elevation
+    # Cache elevations to the database
+    if(!is.null(conn)){
+      print("Starting caching process...")
+      res <- DBI::dbAppendTable(conn,"FIELD_ELEV_BYUI_DEV",
+                                missing_elevs %>% select(FIELD_ID, ELEVATION))
+      print(res)
+    }
+  }
+  else{
+    print("All elevations cached, skipping API...")
   }
   
+  # Join the two data frames back together
+  # TODO figure out row numbers
+  total_df <- joined_elevs %>%
+    full_join(missing_elevs, by="FIELD_ID") %>%
+    mutate(ELEVATION=coalesce(ELEVATION.x, ELEVATION.y)) %>%
+    #distinct(row_num.x) %>%
+    arrange(row_num.x) %>%
+    distinct(FIELD_ID, .keep_all=TRUE)
+  # Make sure it is in the right order
+  print(total_df)
   return(elevation)
 }
 

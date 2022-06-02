@@ -1,0 +1,125 @@
+---
+title: "ODBC for Mac Users"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ODBC (MacOS)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+There are multiple ways to connect Snowflake to RStudio using MacOs. The two main ways are using the iODBC Driver or the unixODBC manager. Using the unixODBC manager is recommended because although the iODBC manager is simpler to use, it doesn't work in many cases. This tutorial focuses on using the unixODBC manager to connect to Snowflake.
+
+# Step 1: Install the unixODBC Manager
+
+Open the terminal and enter the following commands to install the manager.
+
+`brew update`
+
+`brew install unixodbc freetds`
+
+# Step 2: Install the iODBC and ODBC Managers
+
+The [ODBC Manager](http://www.odbcmanager.net/) is a useful tool to configure the ODBC DSN. Once downloaded, open the file and follow the instructions to install the driver.
+
+The [iODBC Manager](http://download3.openlinksw.com/uda/components/7.0/universal-apple-macosx10.7-32/mxkozzzz.dmg) will still need to be installed, despite what was mentioned earlier. It contains files needed to properly configure DSNs.
+
+# Step 3: Download the Driver
+
+Download the latest version of the driver from the [Snowflake Client Repository](https://docs.snowflake.com/en/user-guide/snowflake-client-repository.html). Download the version that uses the AWS endpoint.
+
+Follow the prompts to install the driver.
+
+# Step 4: Specify the ODBC Manager path
+
+1.  In the terminal, use the following command to open the simba.snowflake.ini file:
+
+    `vi /opt/snowflake/snowflakeodbc/lib/universal/simba.snowflake.ini`
+
+2.  In the file, there are instructions to uncomment the ODBCInstLib being used with the driver manager. The driver manager being used is iODBC. Locate the "Darwin Specific ODBCInstLib" in the file, then uncomment the line of code that contains "libodbcinst.dylib".
+
+3.  Use the command `:wq` to save the file. If this throws an error, use `:wq!`.
+
+# Step 5: Determine where the default files odbc.ini and odbcinst.ini are located.
+
+    `odbcinst -j`
+
+# Step 6: Add Driver
+
+1.  Open the odbcinst.ini file
+
+    `sudo vi /usr/local/etc/odbcinst.ini`
+
+2.  If prompted for a password, enter your computer's password to access the file.
+
+```{=html}
+<!-- -->
+```
+3.  Insert the following sample text.
+
+[ODBC Drivers]
+
+SnowflakeDSIIDriver=Installed
+
+[SnowflakeDSIIDriver]
+
+APILevel=1
+
+ConnectFunctions=YYY
+
+Description=Snowflake DSII
+
+Driver=/opt/snowflake/snowflakeodbc/lib/universal/libSnowflake.dylib
+
+DriverODBCVer=03.52
+
+SQLLevel=1
+
+4.  Save and close the file using `:wq`
+
+# Step 7: Add the Snowflake DSN
+
+1.  Open the local odbc.ini file
+
+    `sudo vi /usr/local/etc/odbc.ini`
+
+2.  Add the sample entry to the file.
+
+[ODBC Data Sources]
+
+SNOWFLAKE_ODBC = SnowflakeDSIIDriver
+
+[SNOWFLAKE_ODBC]
+
+Driver = /opt/snowflake/snowflakeodbc/lib/universal/libSnowflake.dylib
+
+Description = Internal Snowflake
+
+uid = \<\>
+
+server = \<\>.snowflakecomputing.com
+
+database = \<\>
+
+schema = \<\>
+
+warehouse = \<\>
+
+role = \<\>
+
+tracing = 6
+
+3.  Edit the sample entry to match your snowflake database. In the simplest form, this will include the driver (location of the driver), a name(in this case it's 'SNOWFLAKE_ODBC'), and the server (the url for your database). The other options will be the default parameters if nothing is specified in the ODBC connect string.
+
+4.  Save and quit using `:wq`
+
+# Step 8:Verify the ODBC DSN was created
+
+    odbcinst -q -s
+
+The output should list your ODBC DSN
+
+# Step 9: Test the Snowflake DSN
+
+Run the following command, replacing each prompt with your Snowflake DSN's parameters.
+
+`isql -v <SNOFLAKE_ODBC_DSN_NAME> <USERNAME> <PASSWORD>`

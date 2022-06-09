@@ -10,6 +10,9 @@
     <loc>https://byuidsconsulting.github.io/weatheR/articles/index.html</loc>
   </url>
   <url>
+    <loc>https://byuidsconsulting.github.io/weatheR/articles/odbc_mac.html</loc>
+  </url>
+  <url>
     <loc>https://byuidsconsulting.github.io/weatheR/authors.html</loc>
   </url>
   <url>
@@ -29,6 +32,12 @@
   </url>
   <url>
     <loc>https://byuidsconsulting.github.io/weatheR/reference/create_field_weather_data.html</loc>
+  </url>
+  <url>
+    <loc>https://byuidsconsulting.github.io/weatheR/reference/download_crops.html</loc>
+  </url>
+  <url>
+    <loc>https://byuidsconsulting.github.io/weatheR/reference/download_fields.html</loc>
   </url>
   <url>
     <loc>https://byuidsconsulting.github.io/weatheR/reference/elev_change.html</loc>

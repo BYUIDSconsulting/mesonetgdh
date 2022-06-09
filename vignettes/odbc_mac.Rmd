@@ -51,9 +51,8 @@ Follow the prompts to install the driver.
 
 2.  If prompted for a password, enter your computer's password to access the file.
 
-```{=html}
 <!-- -->
-```
+
 3.  Insert the following sample text.
 
 [ODBC Drivers]

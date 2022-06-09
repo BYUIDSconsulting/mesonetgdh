@@ -1,5 +1,5 @@
-library(pacman)
-pacman::p_load(dplyr, DBI)
+# library(pacman)
+# pacman::p_load(dplyr, DBI)
 
 #' @title Get Elevations
 #' @param df is the dataframe as output from the 'all_fields' function

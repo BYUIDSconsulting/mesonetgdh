@@ -1,5 +1,5 @@
-library(pacman)
-pacman::p_load(DBI, odbc, tidyverse, gtools)
+# library(pacman)
+# pacman::p_load(DBI, odbc, tidyverse, gtools)
 
 #' @title Request crop data (seed_harvest_wide) from Snowflake within a certain season range
 #' @param conn The connection to the Snowflake database

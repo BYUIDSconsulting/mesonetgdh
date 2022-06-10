@@ -4,7 +4,7 @@
 \alias{pull_temp_all}
 \title{Request the temperature data from MesoWest, but fast}
 \usage{
-pull_temp_all(df)
+pull_temp_all(df, min_date = NA, max_date = NA)
 }
 \arguments{
 \item{df}{is the fields_stations dataset derived from the find_closest_station() function.}

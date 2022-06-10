@@ -4,7 +4,7 @@
 \alias{get_elev}
 \title{Get Elevations}
 \usage{
-get_elev(df, conn = NA)
+get_elev(df, conn = NULL)
 }
 \arguments{
 \item{df}{is the dataframe as output from the 'all_fields' function}

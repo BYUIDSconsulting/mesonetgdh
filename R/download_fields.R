@@ -1,5 +1,5 @@
-library(pacman)
-pacman::p_load(DBI, odbc, tidyverse)
+# library(pacman)
+# pacman::p_load(DBI, odbc, tidyverse)
 
 #' @title Request fields data (all_fields1) from Snowflake
 #' @param conn The connection to the Snowflake database

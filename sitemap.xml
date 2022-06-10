@@ -46,7 +46,16 @@
     <loc>https://byuidsconsulting.github.io/weatheR/reference/find_closest_stations.html</loc>
   </url>
   <url>
+    <loc>https://byuidsconsulting.github.io/weatheR/reference/get_all_fields.html</loc>
+  </url>
+  <url>
     <loc>https://byuidsconsulting.github.io/weatheR/reference/get_elev.html</loc>
+  </url>
+  <url>
+    <loc>https://byuidsconsulting.github.io/weatheR/reference/get_latest_date.html</loc>
+  </url>
+  <url>
+    <loc>https://byuidsconsulting.github.io/weatheR/reference/get_seed_harvest_wide.html</loc>
   </url>
   <url>
     <loc>https://byuidsconsulting.github.io/weatheR/reference/get_state.html</loc>
@@ -68,6 +77,9 @@
   </url>
   <url>
     <loc>https://byuidsconsulting.github.io/weatheR/reference/pull_temp_all.html</loc>
+  </url>
+  <url>
+    <loc>https://byuidsconsulting.github.io/weatheR/reference/remove_duplicates.html</loc>
   </url>
   <url>
     <loc>https://byuidsconsulting.github.io/weatheR/reference/seed_harvest_clean.html</loc>

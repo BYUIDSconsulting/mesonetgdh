@@ -34,7 +34,8 @@ get_all_fields <- function(myconn){
     # Using only fields in Arizona, Idaho, Utah
     filter(state %in% c('AZ', 'ID', 'UT')) %>% 
     # Get elevation after we have the states
-    mutate(field_elev = mesonetgdh::get_elev(.)) %>%
+    # The DB connection isn't working
+    mutate(field_elev = mesonetgdh::get_elev(.,conn=NULL)) %>%
     drop_na() %>%
     rename(field_lat=lat,
            field_lon=lon)
@@ -54,7 +55,7 @@ get_latest_date <- function(myconn){
     "SELECT * FROM GDH_BYUI_DEV ORDER BY GDH_DATE DESC LIMIT 1;"
     ) %>%
     pull(GDH_DATE)
-  return(GDH_DATE)
+  return(latest_date)
 }
 
 #' @title Get the wide seed harvest dataframe (based on field crops data) from the Snowflake database

@@ -12,6 +12,9 @@ get_elev <-  function(df, conn=NULL){
   #   FIELD_ID VARCHAR,
   #   ELEVATION NUMBER
   # );
+  if(is.null(conn)){
+    
+  }
   
   # Set an index so we can sort at the end
   df$row_num = seq.int(nrow(df))
@@ -52,12 +55,18 @@ get_elev <-  function(df, conn=NULL){
   
   # Join the two data frames back together
   # TODO figure out row numbers
-  total_df <- joined_elevs %>%
-    full_join(missing_elevs, by="FIELD_ID") %>%
-    mutate(ELEVATION=coalesce(ELEVATION.x, ELEVATION.y)) %>%
-    #distinct(row_num.x) %>%
-    arrange(row_num.x) %>%
-    distinct(FIELD_ID, .keep_all=TRUE)
+  if(!is.null(conn)){
+    global_je <<- joined_elevs
+    total_df <- joined_elevs %>%
+      full_join(missing_elevs, by="FIELD_ID") %>%
+      mutate(ELEVATION=coalesce(ELEVATION.x, ELEVATION.y)) %>%
+      #distinct(row_num.x) %>%
+      arrange(row_num.x) %>%
+      distinct(FIELD_ID, .keep_all=TRUE)
+  }
+  else{
+    total_df <- missing_elevs
+  }
   # Make sure it is in the right order
   print(total_df)
   return(elevation)

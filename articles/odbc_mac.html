@@ -82,18 +82,18 @@
 <h2 id="step-2-install-the-iodbc-and-odbc-managers">Step 2: Install the iODBC and ODBC Managers<a class="anchor" aria-label="anchor" href="#step-2-install-the-iodbc-and-odbc-managers"></a>
 </h2>
 <p>The <a href="http://www.odbcmanager.net/" class="external-link">ODBC Manager</a> is a useful tool to configure the ODBC DSN. Once downloaded, open the file and follow the instructions to install the driver.</p>
-<p><img src="../articles/images/odbc_manager_pic1.png" style="width:100.0%"></p>
+<p><img src="images/odbc_manager_pic1.png" style="width:100.0%"></p>
 <p>The <a href="http://download3.openlinksw.com/uda/components/7.0/universal-apple-macosx10.7-32/mxkozzzz.dmg" class="external-link">iODBC Manager</a> will still need to be installed, despite what was mentioned earlier. It contains files needed to properly configure DSNs.</p>
 </div>
 <div class="section level2">
 <h2 id="step-3-download-the-driver">Step 3: Download the Driver<a class="anchor" aria-label="anchor" href="#step-3-download-the-driver"></a>
 </h2>
 <p>Download the latest version of the driver from the <a href="https://docs.snowflake.com/en/user-guide/snowflake-client-repository.html" class="external-link">Snowflake Client Repository</a>. Download the version that uses the AWS endpoint.</p>
-<p><img src="../articles/images/odbc_driver_mac.png" style="width:100.0%"></p>
-<p><img src="../articles/images/odbc_driver_mac1.png" style="width:100.0%"></p>
-<p><img src="../articles/images/odbc_driver_mac2.png" style="width:100.0%"></p>
-<p><img src="../articles/images/odbc_drivee_mac3.png" style="width:100.0%"></p>
-<p><img src="../articles/images/odbc_driver_mac4.png" style="width:100.0%"></p>
+<p><img src="images/odbc_driver_mac.png" style="width:100.0%"></p>
+<p><img src="images/odbc_driver_mac1.png" style="width:100.0%"></p>
+<p><img src="images/odbc_driver_mac2.png" style="width:100.0%"></p>
+<p><img src="images/odbc_drivee_mac3.png" style="width:100.0%"></p>
+<p><img src="images/odbc_driver_mac4.png" style="width:100.0%"></p>
 <p>Follow the prompts to install the driver.</p>
 </div>
 <div class="section level2">
@@ -106,7 +106,7 @@
 </li>
 <li><p>In the file, there are instructions to uncomment the ODBCInstLib being used with the driver manager. The driver manager being used is iODBC. Locate the “Darwin Specific ODBCInstLib” in the file, then uncomment the line of code that contains “libodbcinst.dylib”.</p></li>
 </ol>
-<p><img src="../articles/images/odbc_manager_edit.png" style="width:100.0%"></p>
+<p><img src="images/odbc_manager_edit.png" style="width:100.0%"></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Use the command <code>:wq</code> to save the file. If this throws an error, use <code>:wq!</code>.</li>
 </ol>
@@ -115,7 +115,7 @@
 <h2 id="step-5-determine-where-the-default-files-odbc-ini-and-odbcinst-ini-are-located-">Step 5: Determine where the default files odbc.ini and odbcinst.ini are located.<a class="anchor" aria-label="anchor" href="#step-5-determine-where-the-default-files-odbc-ini-and-odbcinst-ini-are-located-"></a>
 </h2>
 <pre><code><span class="va">`odbcinst -j`</span></code></pre>
-<p><img src="../articles/images/file_locating.png" style="width:50.0%"></p>
+<p><img src="images/file_locating.png" style="width:50.0%"></p>
 </div>
 <div class="section level2">
 <h2 id="step-6-add-driver">Step 6: Add Driver<a class="anchor" aria-label="anchor" href="#step-6-add-driver"></a>
@@ -140,7 +140,7 @@
 <div class="line-block">          DriverODBCVer=03.52</div>
 <div class="line-block">          SQLLevel=1</div>
 <div class="line-block">      The end result will look like the following image.</div>
-<p><img src="../articles/images/driver1.png" style="width:75.0%"></p>
+<p><img src="images/driver1.png" style="width:75.0%"></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Save and close the file using <code>:wq</code>
 </li>
@@ -185,7 +185,7 @@
 <p>Run the following command, replacing each prompt with your Snowflake DSN’s parameters.</p>
 <p><code>isql -v &lt;SNOFLAKE_ODBC_DSN_NAME&gt; &lt;USERNAME&gt; &lt;PASSWORD&gt;</code></p>
 <p>The result will look similar to the following image:</p>
-<p><img src="../articles/images/connected.png" style="width:50.0%"></p>
+<p><img src="images/connected.png" style="width:50.0%"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

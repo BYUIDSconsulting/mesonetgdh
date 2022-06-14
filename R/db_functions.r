@@ -1,5 +1,5 @@
-library(pacman)
-pacman::p_load(dplyr, DBI)
+# library(pacman)
+# pacman::p_load(dplyr, DBI)
 
 #' @title Get all fields from the Snowflake database
 #' @param myconn The connection to the Snowflake database

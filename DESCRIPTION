@@ -25,6 +25,7 @@ Imports:
     jsonlite,
     httr,
     zoo,
+    DBI,
 URL: https://byuidsconsulting.github.io/weatheR/
 Suggests: 
     rmarkdown,

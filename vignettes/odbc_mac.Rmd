@@ -2,7 +2,7 @@
 title: "ODBC for Mac Users"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ODBC (MacOS)}
+  %\VignetteIndexEntry{ODBC for Mac Users}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -21,11 +21,23 @@ Open the terminal and enter the following commands to install the manager.
 
 The [ODBC Manager](http://www.odbcmanager.net/) is a useful tool to configure the ODBC DSN. Once downloaded, open the file and follow the instructions to install the driver.
 
+![](images/odbc_manager_pic1.png){width=100%}
+
 The [iODBC Manager](http://download3.openlinksw.com/uda/components/7.0/universal-apple-macosx10.7-32/mxkozzzz.dmg) will still need to be installed, despite what was mentioned earlier. It contains files needed to properly configure DSNs.
 
 # Step 3: Download the Driver
 
 Download the latest version of the driver from the [Snowflake Client Repository](https://docs.snowflake.com/en/user-guide/snowflake-client-repository.html). Download the version that uses the AWS endpoint.
+
+![](images/odbc_driver_mac.png){width=100%}
+
+![](images/odbc_driver_mac1.png){width=100%}
+
+![](images/odbc_driver_mac2.png){width=100%}
+
+![](images/odbc_drivee_mac3.png){width=100%}
+
+![](images/odbc_driver_mac4.png){width=100%}
 
 Follow the prompts to install the driver.
 
@@ -37,11 +49,15 @@ Follow the prompts to install the driver.
 
 2.  In the file, there are instructions to uncomment the ODBCInstLib being used with the driver manager. The driver manager being used is iODBC. Locate the "Darwin Specific ODBCInstLib" in the file, then uncomment the line of code that contains "libodbcinst.dylib".
 
+![](images/odbc_manager_edit.png){width=100%}
+
 3.  Use the command `:wq` to save the file. If this throws an error, use `:wq!`.
 
 # Step 5: Determine where the default files odbc.ini and odbcinst.ini are located.
 
     `odbcinst -j`
+    
+![](images/file_locating.png){width=50%}
 
 # Step 6: Add Driver
 
@@ -55,23 +71,27 @@ Follow the prompts to install the driver.
 
 3.  Insert the following sample text.
 
-[ODBC Drivers]
+|           [ODBC Drivers]
 
-SnowflakeDSIIDriver=Installed
+|           SnowflakeDSIIDriver=Installed
 
-[SnowflakeDSIIDriver]
+|           [SnowflakeDSIIDriver]
 
-APILevel=1
+|           APILevel=1
 
-ConnectFunctions=YYY
+|           ConnectFunctions=YYY
 
-Description=Snowflake DSII
+|           Description=Snowflake DSII
 
-Driver=/opt/snowflake/snowflakeodbc/lib/universal/libSnowflake.dylib
+|           Driver=/opt/snowflake/snowflakeodbc/lib/universal/libSnowflake.dylib
 
-DriverODBCVer=03.52
+|           DriverODBCVer=03.52
 
-SQLLevel=1
+|           SQLLevel=1
+
+|       The end result will look like the following image.
+
+![](images/driver1.png){width=75%}
 
 4.  Save and close the file using `:wq`
 
@@ -83,29 +103,29 @@ SQLLevel=1
 
 2.  Add the sample entry to the file.
 
-[ODBC Data Sources]
+|           [ODBC Data Sources]
 
-SNOWFLAKE_ODBC = SnowflakeDSIIDriver
+|           SNOWFLAKE_ODBC = SnowflakeDSIIDriver
 
-[SNOWFLAKE_ODBC]
+|           [SNOWFLAKE_ODBC]
 
-Driver = /opt/snowflake/snowflakeodbc/lib/universal/libSnowflake.dylib
+|           Driver = /opt/snowflake/snowflakeodbc/lib/universal/libSnowflake.dylib
 
-Description = Internal Snowflake
+|           Description = Internal Snowflake
 
-uid = \<\>
+|           uid = \<\>
 
-server = \<\>.snowflakecomputing.com
+|           server = \<\>.snowflakecomputing.com
 
-database = \<\>
+|           database = \<\>
 
-schema = \<\>
+|           schema = \<\>
 
-warehouse = \<\>
+|           warehouse = \<\>
 
-role = \<\>
+|           role = \<\>
 
-tracing = 6
+|           tracing = 6
 
 3.  Edit the sample entry to match your snowflake database. In the simplest form, this will include the driver (location of the driver), a name(in this case it's 'SNOWFLAKE_ODBC'), and the server (the url for your database). The other options will be the default parameters if nothing is specified in the ODBC connect string.
 
@@ -122,3 +142,7 @@ The output should list your ODBC DSN
 Run the following command, replacing each prompt with your Snowflake DSN's parameters.
 
 `isql -v <SNOFLAKE_ODBC_DSN_NAME> <USERNAME> <PASSWORD>`
+
+The result will look similar to the following image:
+
+![](images/connected.png){width=50%}

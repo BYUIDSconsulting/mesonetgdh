@@ -27,11 +27,16 @@ pull_temp_block <- function(df, start_date, end_date, uniq_stations){
   req_url <- paste0(base_url, req, '&token=', token)
   response <- jsonlite::fromJSON(req_url, simplifyMatrix = TRUE)
   resp_json <- jsonlite::toJSON(response)
+  print("Number of stations requested:")
+  print(length(uniq_stations))
+  print("Number of stations returned:")
+  print(length(response$STATION))
   print(req_url)
   df_request <- as.data.frame(NULL)
   # Loop through each station and add its info to the data frame
   for(i in 1:length(uniq_stations)){
     id <- uniq_stations[i]
+    print(response$SUMMARY)
     resp <- data.frame(lapply(response$STATION[i,]$OBSERVATIONS, unlist)) %>%
       mutate(station_id = id)
     df_request <- rbind(df_request, resp)

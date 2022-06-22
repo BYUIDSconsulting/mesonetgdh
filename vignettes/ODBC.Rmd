@@ -86,8 +86,8 @@ install.packages(c("DBI", "odbc"))
 Now, try connecting to the database:
 
 ```r
-myconn <- DBI::dbConnect(odbc::odbc(), "Stotz", uid = "STOTZ_GUEST",
-                         pwd = "a9rf8vFBhjnfaHSighs")
+myconn <- DBI::dbConnect(odbc::odbc(), "Stotz", uid = "my_username",
+                         pwd = "my_password")
 ```
 
 Then, try using the farm production database (this should return a data frame with zero rows and columns):

@@ -14,6 +14,11 @@ make_ranges_day <- function(from, to = Sys.Date(), n = 5){
 }
 
 pull_temp_block <- function(df, start_date, end_date, uniq_stations){
+  if(start_date > end_date){
+    temp <- start_date
+    start_date <- end_date
+    end_date <- start_date
+  }
   start_date <- paste0(gsub('-', '', start_date), '0000')
   end_date <- paste0(gsub('-', '', end_date), '0000')
   print(start_date)
@@ -70,7 +75,7 @@ pull_temp_all <- function(df, min_date=NA, max_date=NA) {
   }
   print(start_date)
   print(end_date)
-  date_range_df <- make_ranges_day(min_date, max_date, n=10)
+  date_range_df <- make_ranges_day(min_date, max_date, n=1)
   
   # Get data for each date block (the api only allows a certain number of days)
   uniq_stations <- df$station_id %>% unique()

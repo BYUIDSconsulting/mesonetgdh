@@ -6,7 +6,10 @@ pull_temp <- function(df) {
   
   stations_date <- df %>% 
     select(station_id, harvest_date, seeding_date)
-
+  
+  print(paste0("Number of rows to get temp: ", nrow(stations_date)))
+  print(paste0("Number of distinct stations to get temp: ", nrow(stations_date %>% distinct(station_id))))
+  
   base_url <- 'https://api.synopticdata.com/v2'
 
   df_request <- NULL

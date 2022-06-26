@@ -74,7 +74,16 @@ Now, back on the System DSN window, click "OK". This will save your Stotz data s
 
 ![Save changes to ODBC](images/save_odbc.jpg){width=768px}
 
-# Step 4: Testing the code in R
+# Step 4: Setting up username and password
+
+To securely store the username and password, create an .Renviron (no file extension) file in the Documents folder if it does not already exist:
+
+![.Renviron file](images/Renviron.jpg){width=768px}
+Open the file with Notepad (or create the file with Notepad if it does not exist), and set the MESONETGDH_UID and the MESONETGDH_PWD with the username and password for the Snowflake database:
+
+![.Renviron credentials](images/Renviron_notepad.jpg){width=768px}
+
+# Step 5: Testing the code in R
 
 Finally, we can test the code in R. First, install the DBI and ODBC packages,
 which allow R to connect to the Snowflake database through ODBC:
@@ -86,11 +95,11 @@ install.packages(c("DBI", "odbc"))
 Now, try connecting to the database:
 
 ```r
-myconn <- DBI::dbConnect(odbc::odbc(), "Stotz", uid = "my_username",
-                         pwd = "my_password")
+myconn <- DBI::dbConnect(odbc::odbc(), "Stotz", uid=Sys.getenv("MESONETGDH_UID"),
+                         pwd=Sys.getenv("MESONETGDH_PWD"))
 ```
 
-Then, try using the farm production database (this should return a data frame with zero rows and columns):
+Then, try using the farm production database (this should return a data frame with zero rows and columns, one can also use dbExecute() instead of dbGetQuery() if a returned table is not needed):
 
 ```r
 DBI::dbGetQuery(myconn, "USE FARM_PROD.FARM__PRODUCTION;")

@@ -15,14 +15,16 @@ calc_gdh <- function(data, field = NULL){
   }
   
   gdhs <- data %>%
-    group_by(FIELD_ID, CROP_NAME, CROP_SEASON, Date) %>%
+    group_by(FIELD_ID, CROP_NAME, CROP_SEASON, Date, Hour) %>%
     filter(Date >= seeding_date & Date <= harvest_date) %>%
     summarize(seeding_date = seeding_date,
               harvest_date = harvest_date,
               gdh = temp_combined_avg - Base_Fahrenheit,
               gdh = case_when(gdh < 0 ~ 0,
                               temp_combined_avg > Upper_Fahrenheit ~ Upper_Fahrenheit - Base_Fahrenheit, 
-                              TRUE ~ gdh))
+                              TRUE ~ gdh),
+    ) %>%
+    rename(GDH_DATE = Date)
   
   write_csv(gdhs, paste0("GDH-", Sys.Date(), ".csv"))
   print("csv file created")

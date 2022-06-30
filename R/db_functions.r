@@ -98,13 +98,18 @@ get_seed_harvest_wide <- function(myconn, gdd_info_formatted){
   seed_harvest_wide <- seed_harvest_df  %>% 
     pivot_wider(names_from = FIELD_OPERATION_TYPE,
                 values_from = DATE) %>% 
-    drop_na() %>% 
+    #drop_na() %>% 
     mutate(harvest = as.Date(harvest),
            seeding = as.Date(seeding)) %>% 
     rename(harvest_date = harvest,
            seeding_date = seeding) %>% 
+    mutate(harvest_date = coalesce(harvest_date, GDH_MAX_DATE)) %>%
+    mutate(end_of_year = as.Date(sprintf("%d-12-31",CROP_SEASON))) %>%
+    mutate(harvest_date = coalesce(harvest_date, end_of_year)) %>%
+    mutate(start_of_year = as.Date(sprintf("%d-01-01",CROP_SEASON))) %>%
+    mutate(seeding_date = coalesce(seeding_date, start_of_year)) %>%
     filter(CROP_NAME %in% gdd_info_formatted$CROP, # FROM AVAILABLE CROP THRESHOLD DATA
-           CROP_SEASON > 2019)
+           CROP_SEASON > 2018)
   return(seed_harvest_wide)
 }
 

@@ -67,9 +67,17 @@ get_latest_date <- function(myconn){
 get_seed_harvest_wide <- function(myconn, gdd_info_formatted){
   # crop information, seeding and harvest dates from the database
   crops_query <- "
-  SELECT FIELD_ID, FIELD_OPERATION_TYPE, CROP_NAME,
-    CAST(CROP_SEASON AS INT) AS CROP_SEASON, START_DATE, END_DATE
-    FROM FIELD_OPERATIONS
+  SELECT o.FIELD_ID, o.FIELD_OPERATION_TYPE, o.CROP_NAME,
+    CAST(o.CROP_SEASON AS INT) AS CROP_SEASON, o.START_DATE, o.END_DATE,
+    g.GDH_MAX_DATE
+    FROM FIELD_OPERATIONS o
+    LEFT JOIN (
+      SELECT MAX(GDH_DATE) AS GDH_MAX_DATE, FIELD_ID, CROP_SEASON
+      FROM GDH_BYUI_DEV
+      GROUP BY FIELD_ID, CROP_SEASON
+    ) g
+        ON o.FIELD_ID = g.FIELD_ID
+        AND o.CROP_SEASON = g.CROP_SEASON
     ORDER BY FIELD_ID; 
   "
   field_crops <- DBI::dbGetQuery(myconn, crops_query)

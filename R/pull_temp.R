@@ -37,3 +37,23 @@ pull_temp <- function(df) {
   return(df_request)
   
 }
+
+#' @title Request the hourly temperature data from MesoWest and process it
+#' @param fields_stations is the fields_stations dataset derived from the find_closest_station() function. 
+#' @examples station_temp_data <- pull_temp_full(fields_stations)
+#' @export
+pull_temp_full <- function(fields_stations){
+  # Do not use the pull_temp_all as it is buggy
+  fs_yearly <- fields_stations %>%
+    group_by(station_id, CROP_SEASON) %>%
+    summarise(seeding_date=min(seeding_date), harvest_date=max(harvest_date))
+  temperature <- pull_temp(fs_yearly)
+  print("Combining stations")
+  print(paste0(nrow(fields_stations), " rows in fields_stations"))
+  print(paste0(nrow(temperature), " rows in temperature"))
+  df_comb <- fields_stations %>%
+    left_join(temperature, by=c('station_id'='station_id', 'CROP_SEASON'='year'))
+  print("Calculating station temp")
+  station_temp_data <- calc_hourly_temp(df_comb)
+  return(station_temp_data)
+}

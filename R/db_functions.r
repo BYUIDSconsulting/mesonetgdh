@@ -113,6 +113,22 @@ get_seed_harvest_wide <- function(myconn, gdd_info_formatted){
   return(seed_harvest_wide)
 }
 
+#' @title Push GDH data to Snowflake.
+#' @param myconn A connection to the Snowflake database.
+#' @param table The table to push to.
+#' @param growing_degree_units The GDH data to push.
+#' @export
+push_gdh <- function(myconn, table="GDH_BYUI_DEV", growing_degree_units){
+  growing_degree_units <- growing_degree_units %>%
+    mutate(ID = paste(Hour,FIELD_ID,GDH_DATE,sep="_")) %>%
+    ungroup()
+  colnames(growing_degree_units) <- toupper(colnames(growing_degree_units))
+  # Append to the table
+  # dbCreateTable(myconn, table, growing_degree_units)
+  rows_written <- DBI::dbAppendTable(myconn, table, growing_degree_units)
+  print(sprintf("%d rows in growing_degree_units",nrow(growing_degree_units)))
+}
+
 #' @title Remove duplicate rows from a Snowflake table 
 #' @param myconn A connection to the Snowflake database
 #' @param table The table to remove duplicates from

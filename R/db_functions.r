@@ -61,6 +61,7 @@ get_latest_date <- function(myconn){
 #' @title Get the wide seed harvest dataframe (based on field crops data) from the Snowflake database
 #' @param myconn The connection to the Snowflake database
 #' @param gdd_info_formatted Growing Degree Day temperature threshold data
+#' @description Reformat date into wide format data
 #' @examples
 #' seed_harvest_df <- get_seed_harvest(myconn)
 #' @export
@@ -72,7 +73,7 @@ get_seed_harvest_wide <- function(myconn, gdd_info_formatted){
     g.GDH_MAX_DATE
     FROM FIELD_OPERATIONS o
     LEFT JOIN (
-      SELECT MAX(GDH_DATE) AS GDH_MAX_DATE, FIELD_ID, CROP_SEASON
+      SELECT MAX(GDH_DATE) AS GDH_MAX_DATE, FIELD_ID, CROP_SEASON, MIN(GDH_DATE) AS GDH_MIN_DATE
       FROM GDH_BYUI_DEV
       GROUP BY FIELD_ID, CROP_SEASON
     ) g

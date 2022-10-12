@@ -12,7 +12,7 @@ get_seed_harvest_wide(myconn, gdd_info_formatted)
 \item{gdd_info_formatted}{Growing Degree Day temperature threshold data}
 }
 \description{
-Get the wide seed harvest dataframe (based on field crops data) from the Snowflake database
+Reformat date into wide format data
 }
 \examples{
 seed_harvest_df <- get_seed_harvest(myconn)

@@ -68,9 +68,9 @@ get_latest_date <- function(myconn){
 get_seed_harvest_wide <- function(myconn, gdd_info_formatted){
   # crop information, seeding and harvest dates from the database
   crops_query <- "
-  SELECT o.FIELD_ID, o.FIELD_OPERATION_TYPE, o.CROP_NAME,
+  SELECT o.FIELD_ID, o.FIELD_OPERATION_TYPE, o.CROP_NAME, 
     CAST(o.CROP_SEASON AS INT) AS CROP_SEASON, o.START_DATE, o.END_DATE,
-    g.GDH_MAX_DATE
+    g.GDH_MAX_DATE, g.GDH_MIN_DATE
     FROM FIELD_OPERATIONS o
     LEFT JOIN (
       SELECT MAX(GDH_DATE) AS GDH_MAX_DATE, FIELD_ID, CROP_SEASON, MIN(GDH_DATE) AS GDH_MIN_DATE
@@ -82,6 +82,7 @@ get_seed_harvest_wide <- function(myconn, gdd_info_formatted){
     ORDER BY FIELD_ID; 
   "
   field_crops <- DBI::dbGetQuery(myconn, crops_query)
+  browser()
   seed_harvest_df <- field_crops %>%
     # Using the START_DATE column for dates
     rename(DATE = START_DATE) %>% 
@@ -95,6 +96,7 @@ get_seed_harvest_wide <- function(myconn, gdd_info_formatted){
     filter(n==1,
            !is.na(CROP_NAME)) %>% # remove unidentified crop name
     select(-n)
+  browser()
   # Restructure dataset
   seed_harvest_wide <- seed_harvest_df  %>% 
     pivot_wider(names_from = FIELD_OPERATION_TYPE,
@@ -108,9 +110,13 @@ get_seed_harvest_wide <- function(myconn, gdd_info_formatted){
     mutate(end_of_year = as.Date(sprintf("%d-12-31",CROP_SEASON))) %>%
     mutate(harvest_date = coalesce(harvest_date, end_of_year)) %>%
     mutate(start_of_year = as.Date(sprintf("%d-01-01",CROP_SEASON))) %>%
-    mutate(seeding_date = coalesce(seeding_date, start_of_year)) %>%
+    # mutate(seeding_date = coalesce(seeding_date, start_of_year)) %>%
+    # mutate(seeding_date = coalesce(GDH_MIN_DATE, seeding_date)) %>%
+    # mutate(seeding_date = coalesce(seeding_date, GDH_MIN_DATE)) %>%
+    mutate(seeding_date = coalesce(seeding_date,  GDH_MIN_DATE, start_of_year)) %>%
     filter(CROP_NAME %in% gdd_info_formatted$CROP, # FROM AVAILABLE CROP THRESHOLD DATA
            CROP_SEASON > 2018)
+  browser()
   return(seed_harvest_wide)
 }
 
